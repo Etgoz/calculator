@@ -1,0 +1,38 @@
+.container{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    width: 40vw;
+    gap: 1em;
+}
+
+select{
+    width: 200px;
+}
+
+#bg-select > *{
+    font-weight: bold;
+}
+
+option[value="orange"]{
+    background-color: orange;
+}
+
+option[value="green"]{
+    background-color: rgb(0, 187, 0);
+}
+
+option[value="cyan"]{
+    background-color: cyan;
+}
+
+option[value="magenta"]{
+    background-color: magenta;
+}
+
+option[value="red"]{
+    background-color: red;
+}
