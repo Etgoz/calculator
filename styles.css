@@ -3,6 +3,8 @@ body.dark .container, body.dark button.disabled {
 }
 body.dark #screen {
   background-color: rgb(216, 255, 172);
+  box-shadow: 0px 0px 3px rgb(216, 255, 172);
+  font-family: "DotGothic16", sans-serif;
 }
 body.dark button {
   background-color: rgb(212, 212, 208);
@@ -15,6 +17,7 @@ body.dark button:disabled {
 body.dark button:hover {
   background-color: #56564f;
   color: white;
+  cursor: pointer;
 }
 body.dark button:active {
   background-color: rgb(212, 212, 208);
@@ -28,6 +31,7 @@ body.light .container, body.light button.disabled {
 }
 body.light #screen {
   background-color: #f5f5c9;
+  box-shadow: 0px 0px 3px #f5f5c9;
 }
 body.light button {
   background-color: #c9f5f5;
@@ -40,6 +44,7 @@ body.light button:disabled {
 body.light button:hover {
   background-color: #1ea1a1;
   color: white;
+  cursor: pointer;
 }
 body.light button:active {
   background-color: #c9f5f5;

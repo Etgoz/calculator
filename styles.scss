@@ -13,6 +13,8 @@ body.dark{
 
     #screen{
         background-color: $dark-screen;
+        box-shadow: 0px 0px 3px $dark-screen;
+        font-family: 'DotGothic16', sans-serif;
     }
 
     button{
@@ -28,6 +30,7 @@ body.dark{
     button:hover{
         background-color: darken($color: $dark-button, $amount: 50);
         color: white;
+        cursor: pointer;
     }
 
     button:active{
@@ -46,6 +49,7 @@ body.light{
 
     #screen{
         background-color: $light-screen;
+        box-shadow: 0px 0px 3px $light-screen;
     }
 
     button{
@@ -61,6 +65,7 @@ body.light{
     button:hover{
         background-color: darken($color: $light-button, $amount: 50);
         color: white;
+        cursor: pointer;
     }
 
     button:active{
