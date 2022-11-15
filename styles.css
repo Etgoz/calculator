@@ -2,6 +2,7 @@
   body {
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
+    gap: 2px;
   }
   .container {
     grid-column: 2/3;
@@ -47,31 +48,35 @@ body.dark #calc-header {
 }
 
 body.light .container, body.light button.disabled {
-  background-color: #f5c9f5;
+  background-color: rgb(231, 231, 231);
 }
 body.light #screen {
   background-color: #f5f5c9;
   box-shadow: 0px 0px 3px #f5f5c9;
 }
 body.light button {
-  background-color: #c9f5f5;
-  border: 0.5px solid #c9f5f5;
+  background-color: #7dbaff;
+  border: 0.5px solid #7dbaff;
 }
 body.light button:disabled {
-  background-color: #f5c9f5;
+  background-color: rgb(231, 231, 231);
   border: none;
 }
 body.light button:hover {
-  background-color: #1ea1a1;
+  background-color: #003b7d;
   color: white;
   cursor: pointer;
 }
 body.light button:active {
-  background-color: #c9f5f5;
+  background-color: #7dbaff;
 }
 body.light #calc-header {
   color: rgb(68, 68, 68);
   border: none;
+}
+
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .container {
@@ -80,8 +85,8 @@ body.light #calc-header {
   grid-template-rows: 0.5fr repeat(6, 1fr);
   grid-auto-flow: column;
   place-content: center;
-  gap: 2px;
-  padding: 2px;
+  gap: 4px;
+  padding: 8px;
 }
 
 button {
@@ -111,7 +116,7 @@ button svg {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: repeat(4, 1fr);
-  gap: 2px;
+  gap: 4px;
   place-content: center;
 }
 
@@ -128,9 +133,17 @@ button svg {
   grid-row: 2;
   border: 0.5px solid rgb(68, 68, 68);
   border-radius: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3em;
 }
 
 #c {
   grid-column: 2/5;
   grid-row: 3;
+}
+
+#sci-display {
+  display: none;
 }/*# sourceMappingURL=styles.css.map */

@@ -2,9 +2,9 @@ $dark-bg: rgb(68, 68, 68);
 $dark-screen: rgb(216, 255, 172);
 $dark-button: rgb(212, 212, 208);
 
-$light-bg: #f5c9f5;
+$light-bg: rgb(231, 231, 231);
 $light-screen: #f5f5c9;
-$light-button:#c9f5f5;
+$light-button:#7dbaff;
 
 @media screen and (max-width:768px){
 }
@@ -13,6 +13,7 @@ $light-button:#c9f5f5;
     body{
         display: grid;
         grid-template-columns: 1fr 2fr 1fr;
+        gap: 2px;
     }
     .container{
         grid-column: 2 / 3;
@@ -102,14 +103,18 @@ body.light{
     }
 }
 
+body{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
 .container{
     display: grid;
     grid-template-columns: 1fr 1.5fr 1.5fr 1.5fr 1fr;
     grid-template-rows: 0.5fr repeat(6, 1fr);
     grid-auto-flow: column;
     place-content: center;
-    gap: 2px;
-    padding: 2px;
+    gap: 4px;
+    padding: 8px;
 }
 
 button{
@@ -140,7 +145,7 @@ button{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: repeat(4, 1fr);
-    gap: 2px;
+    gap: 4px;
     place-content: center;
 }
 
@@ -157,6 +162,10 @@ button{
     grid-row: 2;
     border: 0.5px solid rgb(68, 68, 68);
     border-radius: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3em;
 }
 
 #c{
@@ -164,3 +173,6 @@ button{
     grid-row: 3;
 }
 
+#sci-display{
+    display: none;
+}
