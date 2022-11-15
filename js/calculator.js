@@ -27,14 +27,12 @@ function multiply(x, y){
 
 function checkInput(userIn) {
     if (!operator){
-        if (userIn in [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, '.']){
+        if (userIn in [1, 2, 3, 4, 5, 6, 7, 8, 9, 0] || userIn === '.'){
             a += userIn;
-            screen.innerHTML = a;
         } 
     } else if (operator){
-        if (userIn in [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, '.']){
+        if (userIn in [1, 2, 3, 4, 5, 6, 7, 8, 9, 0] || userIn === '.'){
             b += userIn;
-            screen.innerHTML += b;
         } 
     }
 };
@@ -45,6 +43,11 @@ Array.from(document.getElementsByClassName('operand')).forEach((button) => {
     button.addEventListener('click', function() { 
         input = button.value;
         checkInput(input);
+        if(!operator){
+            screen.innerHTML = a;
+        } else {
+            screen.innerHTML = a + operator + b;
+        }
         }
 )});
 
