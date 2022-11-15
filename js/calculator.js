@@ -14,6 +14,10 @@ function sub(x, y){
 }
 
 function divide(x, y){
+    if (y === 0){
+        screen.innerHTML = 'ERROR';
+        b = '';
+    }
     return x/y;
 }    
 
@@ -23,12 +27,12 @@ function multiply(x, y){
 
 function checkInput(userIn) {
     if (!operator){
-        if (userIn in [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]){
+        if (userIn in [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, '.']){
             a += userIn;
             screen.innerHTML = a;
         } 
     } else if (operator){
-        if (userIn in [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]){
+        if (userIn in [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, '.']){
             b += userIn;
             screen.innerHTML += b;
         } 

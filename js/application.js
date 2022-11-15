@@ -17,7 +17,7 @@ mode.addEventListener('click', function() {
 const sciDisplay = document.getElementById('sci-display');
 
 document.getElementById('sci').addEventListener('click', function() {
-    if (sciDisplay.style.display === 'none') {
+    if (sciDisplay.style.display !== 'block') {
         sciDisplay.style.display = 'block';
     } else {
         sciDisplay.style.display = 'none';
@@ -27,7 +27,7 @@ document.getElementById('sci').addEventListener('click', function() {
 const historyDisplay = document.getElementById('history-display')
 
 document.getElementById('history').addEventListener('click', function() {
-    if (historyDisplay.style.display === 'none') {
+    if (historyDisplay.style.display !== 'block') {
         historyDisplay.style.display = 'block';
     } else {
         historyDisplay.style.display = 'none';
