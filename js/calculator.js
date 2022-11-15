@@ -103,7 +103,8 @@ document.getElementById('equal').addEventListener('click', function(){
             reset()
             break;
     }
-    screen.innerHTML = last;
+    a = last;
+    screen.innerHTML = a;
 })
 
 function reset(){
