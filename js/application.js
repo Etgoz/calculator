@@ -14,13 +14,22 @@ mode.addEventListener('click', function() {
     }
 });
 
-const sci = document.getElementById('sci');
 const sciDisplay = document.getElementById('sci-display');
 
-sci.addEventListener('click', function() {
+document.getElementById('sci').addEventListener('click', function() {
     if (sciDisplay.style.display === 'none') {
         sciDisplay.style.display = 'block';
     } else {
         sciDisplay.style.display = 'none';
+    }
+});
+
+const historyDisplay = document.getElementById('history-display')
+
+document.getElementById('history').addEventListener('click', function() {
+    if (historyDisplay.style.display === 'none') {
+        historyDisplay.style.display = 'block';
+    } else {
+        historyDisplay.style.display = 'none';
     }
 });
