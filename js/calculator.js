@@ -5,25 +5,12 @@ let b = '';
 
 const screen = document.querySelector('#screen');
 
-function add(x, y){
-    return x+y;
-}
-
-function sub(x, y){
-    return x-y;
-}
-
-function divide(x, y){
-    if (y === 0){
-        screen.innerHTML = 'ERROR';
-        b = '';
+function equal(x, oper, y){
+    if (oper === 'X'){
+        oper = '*';
     }
-    return x/y;
-}    
-
-function multiply(x, y){
-    return x*y;
-}
+    return eval(`${x} ${oper} ${y}`);
+};
 
 function checkInput(userIn) {
     if (!operator){
@@ -41,6 +28,10 @@ let input = '';
 
 Array.from(document.getElementsByClassName('operand')).forEach((button) => {
     button.addEventListener('click', function() { 
+        // if (last){
+        //     reset();
+        //     last = undefined;
+        // }
         input = button.value;
         checkInput(input);
         if(!operator){
@@ -48,7 +39,7 @@ Array.from(document.getElementsByClassName('operand')).forEach((button) => {
         } else {
             screen.innerHTML = a + operator + b;
         }
-        }
+    }
 )});
 
 Array.from(document.getElementsByClassName('operator')).forEach((button) => {
@@ -57,54 +48,38 @@ Array.from(document.getElementsByClassName('operator')).forEach((button) => {
             operator = button.value;
             screen.innerHTML += operator;
         } else if (operator){
-            switch(operator){
-                case '+':
-                    a = add(Number(a), Number(b));
-                    b = '';
-                    operator = button.value;
-                    break;
-                case '-':
-                    a = sub(Number(a), Number(b));
-                    b = '';
-                    operator = button.value;
-                    break;
-                case 'X':
-                    a = multiply(Number(a), Number(b));
-                    b = '';
-                    operator = button.value;
-                    break;
-                case '/':
-                    a = divide(Number(a), Number(b));
-                    b = '';
-                    operator = button.value;
-                    break;
-            }
-            screen.innerHTML = a + operator;
+            if(operator === '/' && b === '0'){
+                a = '';
+                operator = undefined;
+                b = '';
+                screen.innerHTML = 'ERORR';
+            }else{
+                a = equal(a, operator, b);
+                b = '';
+                operator = button.value;
+                screen.innerHTML = a + operator;
+            }}
         }
-    }
 )});
 
 document.getElementById('equal').addEventListener('click', function(){
-    switch(operator){
-        case '+':
-            last = add(Number(a), Number(b));
-            reset()
-            break;
-        case '-':
-            last = sub(Number(a), Number(b));
-            reset()
-            break;
-        case 'X':
-            last = multiply(Number(a), Number(b));
-            reset()
-            break;
-        case '/':
-            last = divide(Number(a), Number(b));
-            reset()
-            break;
-    }
-    a = last;
-    screen.innerHTML = a;
+    if (!operator){
+        last = a;
+        a = '';
+        screen.innerHTML = last;
+    } else if (operator){
+        if(operator === '/' && b === '0'){
+            a = '';
+            operator = undefined;
+            b = '';
+            screen.innerHTML = 'ERORR';
+        }else{
+            last = equal(a, operator, b);
+            b = '';
+            operator = undefined;
+            a = last;
+            screen.innerHTML = a;
+        }}  
 })
 
 function reset(){
@@ -114,7 +89,7 @@ function reset(){
     screen.innerHTML = ''
 }
 
-document.getElementById('c').addEventListener('click', reset)
+document.getElementById('c').addEventListener('click', reset);
 
 document.getElementById('back').addEventListener('click', function (){
     if (b){
@@ -126,5 +101,3 @@ document.getElementById('back').addEventListener('click', function (){
     }
     screen.innerHTML = screen.innerHTML.slice(0, -1)
 });
-
-
