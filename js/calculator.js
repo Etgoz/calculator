@@ -35,9 +35,9 @@ Array.from(document.getElementsByClassName('operand')).forEach((button) => {
         input = button.value;
         checkInput(input);
         if(!operator){
-            screen.innerHTML = a;
+            screen.innerHTML = a.toLocaleString();
         } else {
-            screen.innerHTML = a + operator + b;
+            screen.innerHTML = a.toLocaleString() + operator + b.toLocaleString();
         }
     }
 )});
@@ -57,7 +57,7 @@ Array.from(document.getElementsByClassName('operator')).forEach((button) => {
                 a = equal(a, operator, b);
                 b = '';
                 operator = button.value;
-                screen.innerHTML = a + operator;
+                screen.innerHTML = a.toLocaleString() + operator;
             }}
         }
 )});
@@ -66,7 +66,7 @@ document.getElementById('equal').addEventListener('click', function(){
     if (!operator){
         last = a;
         a = '';
-        screen.innerHTML = last;
+        screen.innerHTML = last.toLocaleString();
     } else if (operator){
         if(operator === '/' && b === '0'){
             a = '';
@@ -78,7 +78,7 @@ document.getElementById('equal').addEventListener('click', function(){
             b = '';
             operator = undefined;
             a = last;
-            screen.innerHTML = a;
+            screen.innerHTML = a.toLocaleString();
         }}  
 })
 
