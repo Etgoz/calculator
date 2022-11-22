@@ -17,12 +17,6 @@ document.getElementById("sci").addEventListener("click", function () {
     console.log(state);
 });
 const myScreen = document.querySelector("#screen");
-function equal(x, oper, y) {
-    if (oper === "X") {
-        oper = "*";
-    }
-    return String(eval(`${x} ${oper} ${y}`));
-}
 function checkInput(userIn) {
     if (!operator) {
         if (userIn in [1, 2, 3, 4, 5, 6, 7, 8, 9, 0] || userIn === ".") {
@@ -34,7 +28,7 @@ function checkInput(userIn) {
             b += userIn;
         }
     }
-    else {
+    else if (operator2) {
         if (userIn in [1, 2, 3, 4, 5, 6, 7, 8, 9, 0] || userIn === ".") {
             c += userIn;
         }
@@ -49,7 +43,7 @@ Array.from(document.getElementsByClassName("operand")).forEach((button) => {
             myScreen.innerHTML = a.toLocaleString();
         }
         else if (state === "simple" ||
-            (state === "scientific mode" && operator in ["/", "*"])) {
+            (state === "scientific mode" && operator in ["/", "X"])) {
             myScreen.innerHTML = a.toLocaleString() + operator + b.toLocaleString();
         }
         else {
@@ -78,8 +72,11 @@ Array.from(document.getElementsByClassName("operator")).forEach((button) => {
                     myScreen.innerHTML = "ERORR";
                 }
                 else {
+                    if (operator === "X") {
+                        operator = "*";
+                    }
                     if (b) {
-                        a = equal(a, operator, b);
+                        a = eval(`${a} ${operator} ${b}`);
                         b = "";
                         operator = button.getAttribute("value");
                         myScreen.innerHTML = a.toLocaleString() + operator;
@@ -90,7 +87,7 @@ Array.from(document.getElementsByClassName("operator")).forEach((button) => {
                     }
                 }
             }
-            else {
+            else if (!operator2) {
                 operator2 = button.getAttribute("value");
                 myScreen.innerHTML += operator2;
             }
@@ -110,36 +107,33 @@ function simpleEqual() {
             b = "";
             myScreen.innerHTML = "ERORR";
         }
-        else {
-            last = equal(a, operator, b);
-            b = "";
-            operator = "";
-            a = last;
-            myScreen.innerHTML = a.toLocaleString();
+        else if (operator === "X") {
+            operator = "*";
         }
+        last = eval(`${a} ${operator} ${b}`);
+        b = "";
+        operator = "";
+        a = last;
+        myScreen.innerHTML = a.toLocaleString();
     }
 }
 function sciEqual() {
     if (!operator2) {
         simpleEqual();
     }
+    else if (operator2 === "/" && c === "0") {
+        myScreen.innerHTML = "ERROR";
+    }
     else {
-        if (["+", "-"].includes(operator2)) {
-            last = equal(equal(a, operator, b), operator2, c);
-            a = last;
-            myScreen.innerHTML = a.toLocaleString();
+        if (operator === "X") {
+            operator = "*";
         }
-        else if (["+", "-"].includes(operator) &&
-            ["X", "/"].includes(operator2)) {
-            if (operator2 === "/" && c === "0") {
-                myScreen.innerHTML = "ERROR";
-            }
-            else {
-                last = equal(a, operator, equal(b, operator2, c));
-                a = last;
-                myScreen.innerHTML = a.toLocaleString();
-            }
+        if (operator2 === "X") {
+            operator2 = "*";
         }
+        last = eval(`${a} ${operator} ${b} ${operator2} ${c}`);
+        a = last;
+        myScreen.innerHTML = a;
     }
     b = "";
     c = "";

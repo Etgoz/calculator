@@ -19,13 +19,15 @@
     background-color: #c9f5f5;
   }
 }
-body.dark .container, body.dark button.disabled {
+body.dark .container,
+body.dark button.disabled {
   background-color: rgb(68, 68, 68);
 }
 body.dark #screen {
   background-color: rgb(216, 255, 172);
   box-shadow: 0px 0px 3px rgb(216, 255, 172);
   font-family: "DotGothic16", sans-serif;
+  font-size: 2.8em;
 }
 body.dark button {
   background-color: rgb(212, 212, 208);
@@ -47,7 +49,8 @@ body.dark #calc-header {
   color: #f5f5c9;
 }
 
-body.light .container, body.light button.disabled {
+body.light .container,
+body.light button.disabled {
   background-color: rgb(231, 231, 231);
 }
 body.light #screen {
