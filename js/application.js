@@ -90,3 +90,16 @@ window.document.addEventListener("DOMContentLoaded", () => {
         body.className = configs.get("theme");
     }
 });
+//history log
+function renderHistory() {
+    if (myHistory) {
+        myHistory.slice(-2).forEach((el) => {
+            let newDiv = document.createElement("div");
+            newDiv.innerText = el;
+            historyDisplay.appendChild(newDiv);
+        });
+    }
+}
+document.getElementById("equal").addEventListener("click", () => {
+    renderHistory();
+});

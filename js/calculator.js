@@ -5,11 +5,13 @@ let b = "";
 let operator2 = "";
 let c = "";
 let state = "simple";
+let myHistory;
 function reset() {
     a = "";
     b = "";
+    c = "";
     operator = "";
-    myScreen.innerHTML = "";
+    operator2 = "";
 }
 document.getElementById("sci").addEventListener("click", function () {
     state = state === "simple" ? "scientific mode" : "simple";
@@ -19,17 +21,17 @@ document.getElementById("sci").addEventListener("click", function () {
 const myScreen = document.getElementById("screen");
 function checkInput(userIn) {
     if (!operator) {
-        if (userIn in [1, 2, 3, 4, 5, 6, 7, 8, 9, 0] || userIn === ".") {
+        if (".1234567890".includes(userIn)) {
             a += userIn;
         }
     }
     else if (operator && !operator2) {
-        if (userIn in [1, 2, 3, 4, 5, 6, 7, 8, 9, 0] || userIn === ".") {
+        if (".1234567890".includes(userIn)) {
             b += userIn;
         }
     }
     else if (operator2) {
-        if (userIn in [1, 2, 3, 4, 5, 6, 7, 8, 9, 0] || userIn === ".") {
+        if (".1234567890".includes(userIn)) {
             c += userIn;
         }
     }
@@ -38,6 +40,9 @@ let input = "";
 Array.from(document.getElementsByClassName("operand")).forEach((button) => {
     button.addEventListener("click", function () {
         input = button.getAttribute("value");
+        if (last && !operator && !a) {
+            reset();
+        }
         checkInput(input);
         if (!operator) {
             myScreen.innerHTML = a.toLocaleString();
@@ -58,6 +63,9 @@ Array.from(document.getElementsByClassName("operand")).forEach((button) => {
 });
 Array.from(document.getElementsByClassName("operator")).forEach((button) => {
     button.addEventListener("click", function () {
+        if (last && !a) {
+            a = last;
+        }
         if (!operator) {
             operator = button.getAttribute("value");
             myScreen.innerHTML += operator;
@@ -102,20 +110,24 @@ function simpleEqual() {
     }
     else if (operator) {
         if (operator === "/" && b === "0") {
-            a = "";
-            operator = "";
-            b = "";
             myScreen.innerHTML = "ERORR";
         }
         else if (operator === "X") {
             operator = "*";
         }
-        last = eval(`${a} ${operator} ${b}`);
-        b = "";
-        operator = "";
-        a = last;
-        myScreen.innerHTML = a.toLocaleString();
+        let exp = `${a} ${operator} ${b}`;
+        last = eval(exp);
+        if (!myHistory) {
+            myHistory = [exp.replace("*", "X"), String("= " + last)];
+        }
+        else {
+            myHistory.push(exp.replace("*", "X"));
+            myHistory.push(String("= " + last));
+        }
+        myScreen.innerHTML = last.toLocaleString();
+        console.log(myHistory);
     }
+    reset();
 }
 function sciEqual() {
     if (!operator2) {
@@ -131,14 +143,19 @@ function sciEqual() {
         if (operator2 === "X") {
             operator2 = "*";
         }
-        last = eval(`${a} ${operator} ${b} ${operator2} ${c}`);
-        a = last;
-        myScreen.innerHTML = a;
+        let exp = `${a} ${operator} ${b} ${operator2} ${c}`;
+        last = eval(exp);
+        if (!myHistory) {
+            myHistory = [exp.replace("*", "X"), String("= " + last)];
+        }
+        else {
+            myHistory.push(exp.replace("*", "X"));
+            myHistory.push(String("= " + last));
+        }
+        myScreen.innerHTML = last.toLocaleString();
+        console.log(myHistory);
     }
-    b = "";
-    c = "";
-    operator = "";
-    operator2 = "";
+    reset();
 }
 document.getElementById("equal").addEventListener("click", function () {
     if (state === "simple") {
@@ -148,7 +165,12 @@ document.getElementById("equal").addEventListener("click", function () {
         sciEqual();
     }
 });
-document.getElementById("c").addEventListener("click", reset);
+document.getElementById("c").addEventListener("click", () => {
+    reset();
+    myScreen.innerHTML = "";
+    myHistory = [];
+    renderHistory();
+});
 document.getElementById("back").addEventListener("click", function () {
     if (c) {
         c = c.slice(0, -1);

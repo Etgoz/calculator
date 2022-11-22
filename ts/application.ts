@@ -94,3 +94,18 @@ window.document.addEventListener("DOMContentLoaded", () => {
 		body.className = configs.get("theme");
 	}
 });
+
+//history log
+function renderHistory(): void {
+	if (myHistory) {
+		myHistory.slice(-2).forEach((el) => {
+			let newDiv: HTMLDivElement = document.createElement("div");
+			newDiv.innerText = el;
+			historyDisplay.appendChild(newDiv);
+		});
+	}
+}
+
+document.getElementById("equal").addEventListener("click", () => {
+	renderHistory();
+});
