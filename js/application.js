@@ -1,24 +1,43 @@
 //info button
 const info = document.getElementById("info");
+let screenLight = "off";
 info.onclick = function () {
     alert("Developer: Etay Gozlan\nVersion: 1\nThis is a calculator web app");
 };
-//light button
+//light (#mode) button
 const mode = document.getElementById("mode");
+const modeButtonColor = mode.style.backgroundColor;
+const screenColor = myScreen.style.backgroundColor;
 const body = document.body;
 mode.addEventListener("click", function () {
-    if (body.className === "light") {
-        body.className = "dark";
+    if (screenLight === "off") {
+        screenLight = "on";
+        myScreen.style.backgroundColor = "yellow";
+        mode.style.color = "white";
+        if (body.className === "light") {
+            mode.style.backgroundColor = "#003b7d";
+        }
+        else {
+            mode.style.backgroundColor = "#56564f";
+        }
     }
     else {
-        body.className = "light";
+        screenLight = "off";
+        myScreen.style.backgroundColor = screenColor;
+        mode.style.color = "black";
+        mode.style.backgroundColor = modeButtonColor;
     }
+    // if (body.className === "light") {
+    // 	body.className = "dark";
+    // } else {
+    // 	body.className = "light";
+    // }
 });
 //sci button
 const sciDisplay = document.getElementById("sci-display");
 const sciButton = document.getElementById("sci");
 const sciButtonColor = sciButton.style.backgroundColor;
-document.getElementById("sci").addEventListener("click", function () {
+sciButton.addEventListener("click", function () {
     if (sciDisplay.style.display !== "block") {
         sciDisplay.style.display = "block";
         sciButton.style.color = "white";
@@ -39,7 +58,7 @@ document.getElementById("sci").addEventListener("click", function () {
 const historyDisplay = document.getElementById("history-display");
 const historyButton = document.getElementById("history");
 const historyButtonColor = historyButton.style.backgroundColor;
-document.getElementById("history").addEventListener("click", function () {
+historyButton.addEventListener("click", function () {
     if (historyDisplay.style.display !== "block") {
         historyDisplay.style.display = "block";
         historyButton.style.color = "white";
@@ -54,5 +73,20 @@ document.getElementById("history").addEventListener("click", function () {
         historyDisplay.style.display = "none";
         historyButton.style.color = "black";
         historyButton.style.backgroundColor = sciButtonColor;
+    }
+});
+//config button
+const configButton = document.getElementById("config");
+configButton.addEventListener("click", () => {
+    window.location.href = "./config.html";
+});
+window.document.addEventListener("DOMContentLoaded", () => {
+    const url = window.location.search;
+    if (url) {
+        const configs = new URLSearchParams(url);
+        const body = document.querySelector("body");
+        body.style.backgroundColor = configs.get("bg-color");
+        body.style.fontFamily = configs.get("font-family");
+        body.className = configs.get("theme");
     }
 });

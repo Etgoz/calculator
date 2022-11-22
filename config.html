@@ -8,14 +8,14 @@
 </head>
 <body>
     <div class="container">
-        <form>
+        <form method='GET' action="./index.html">
             <label>Choose background color:
                 <select name="bg-color" id="bg-select">
                     <option value="orange">orange</option>
                     <option value="green">green</option>
                     <option value="cyan">cyan</option>
                     <option value="magenta">magenta</option>
-                    <option value="red">red</option>
+                    <option value="white">white</option>
                 </select>
             </label>
             <label>Choose font family:
@@ -31,6 +31,8 @@
                 <input type="radio" name="theme" id="theme-dark" value="dark">dark</input>
                 <input type="radio" name="theme" id="theme-light" value="light">light</input>
             </label>
+            <input type="submit" value="submit">
+            <input type="reset" value="reset">
         </form>
     </div>
 </body>

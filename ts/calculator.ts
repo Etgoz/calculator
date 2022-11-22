@@ -20,7 +20,7 @@ document.getElementById("sci").addEventListener("click", function (): void {
 	console.log(state);
 });
 
-const myScreen: Element = document.querySelector("#screen");
+const myScreen: HTMLElement = document.getElementById("screen");
 
 function checkInput(userIn): void {
 	if (!operator) {

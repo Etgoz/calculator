@@ -16,7 +16,7 @@ document.getElementById("sci").addEventListener("click", function () {
     reset();
     console.log(state);
 });
-const myScreen = document.querySelector("#screen");
+const myScreen = document.getElementById("screen");
 function checkInput(userIn) {
     if (!operator) {
         if (userIn in [1, 2, 3, 4, 5, 6, 7, 8, 9, 0] || userIn === ".") {
