@@ -41,8 +41,8 @@ const sciButton: HTMLElement = document.getElementById("sci");
 const sciButtonColor: string = sciButton.style.backgroundColor;
 
 sciButton.addEventListener("click", function (): void {
-	if (sciDisplay.style.display !== "block") {
-		sciDisplay.style.display = "block";
+	if (sciDisplay.classList.contains("hide")) {
+		sciDisplay.classList.replace("hide", "show");
 		sciButton.style.color = "white";
 		if (body.className === "light") {
 			sciButton.style.backgroundColor = "#003b7d";
@@ -50,7 +50,7 @@ sciButton.addEventListener("click", function (): void {
 			sciButton.style.backgroundColor = "#56564f";
 		}
 	} else {
-		sciDisplay.style.display = "none";
+		sciDisplay.classList.replace("show", "hide");
 		sciButton.style.color = "black";
 		sciButton.style.backgroundColor = sciButtonColor;
 	}
@@ -96,6 +96,17 @@ window.document.addEventListener("DOMContentLoaded", () => {
 });
 
 //history log
+
+const historyTitle = document.getElementById("history-title");
+
+function clearHistory(): void {
+	myHistory = [];
+	document.querySelectorAll("#history-display >*").forEach((el) => {
+		el.remove();
+	});
+	historyDisplay.appendChild(historyTitle);
+}
+
 function renderHistory(): void {
 	if (myHistory) {
 		myHistory.slice(-2).forEach((el) => {
@@ -106,6 +117,6 @@ function renderHistory(): void {
 	}
 }
 
-document.getElementById("equal").addEventListener("click", () => {
-	renderHistory();
-});
+// document.getElementById("equal").addEventListener("click", () => {
+// 	renderHistory();
+// });

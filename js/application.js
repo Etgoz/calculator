@@ -38,8 +38,8 @@ const sciDisplay = document.getElementById("sci-display");
 const sciButton = document.getElementById("sci");
 const sciButtonColor = sciButton.style.backgroundColor;
 sciButton.addEventListener("click", function () {
-    if (sciDisplay.style.display !== "block") {
-        sciDisplay.style.display = "block";
+    if (sciDisplay.classList.contains("hide")) {
+        sciDisplay.classList.replace("hide", "show");
         sciButton.style.color = "white";
         if (body.className === "light") {
             sciButton.style.backgroundColor = "#003b7d";
@@ -49,7 +49,7 @@ sciButton.addEventListener("click", function () {
         }
     }
     else {
-        sciDisplay.style.display = "none";
+        sciDisplay.classList.replace("show", "hide");
         sciButton.style.color = "black";
         sciButton.style.backgroundColor = sciButtonColor;
     }
@@ -91,6 +91,14 @@ window.document.addEventListener("DOMContentLoaded", () => {
     }
 });
 //history log
+const historyTitle = document.getElementById("history-title");
+function clearHistory() {
+    myHistory = [];
+    document.querySelectorAll("#history-display >*").forEach((el) => {
+        el.remove();
+    });
+    historyDisplay.appendChild(historyTitle);
+}
 function renderHistory() {
     if (myHistory) {
         myHistory.slice(-2).forEach((el) => {
@@ -100,6 +108,6 @@ function renderHistory() {
         });
     }
 }
-document.getElementById("equal").addEventListener("click", () => {
-    renderHistory();
-});
+// document.getElementById("equal").addEventListener("click", () => {
+// 	renderHistory();
+// });

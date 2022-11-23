@@ -16,7 +16,6 @@
   .scientific {
     grid-column: 3/4;
     grid-row: 1;
-    background-color: #c9f5f5;
   }
 }
 body.dark .container,
@@ -147,13 +146,45 @@ button svg {
   grid-row: 3;
 }
 
-#sci-display {
+.hide {
   display: none;
+}
+
+.show {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 0.5fr repeat(6, 1fr);
+}
+
+.scientific {
+  background-color: rgb(245, 245, 245);
+  font-size: 1.8em;
+  align-items: center;
+  gap: 4px;
+}
+.scientific .sci-title {
+  grid-column: 1/-1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 2px solid white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 0.3em 0.5em;
+}
+.scientific img {
+  height: 3rem;
+}
+
+.sci-operator {
+  text-align: center;
+  font-size: 1.8rem;
 }
 
 #history-display {
   display: none;
   overflow-y: scroll;
+  max-height: 62vh;
 }
 #history-display > div {
   text-align: center;

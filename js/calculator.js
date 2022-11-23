@@ -48,7 +48,7 @@ Array.from(document.getElementsByClassName("operand")).forEach((button) => {
             myScreen.innerHTML = a.toLocaleString();
         }
         else if (state === "simple" ||
-            (state === "scientific mode" && operator in ["/", "X"])) {
+            (state === "scientific mode" && operator in ["/", "*"])) {
             myScreen.innerHTML = a.toLocaleString() + operator + b.toLocaleString();
         }
         else {
@@ -80,9 +80,6 @@ Array.from(document.getElementsByClassName("operator")).forEach((button) => {
                     myScreen.innerHTML = "ERORR";
                 }
                 else {
-                    if (operator === "X") {
-                        operator = "*";
-                    }
                     if (b) {
                         a = eval(`${a} ${operator} ${b}`);
                         b = "";
@@ -118,10 +115,10 @@ function simpleEqual() {
         let exp = `${a} ${operator} ${b}`;
         last = eval(exp);
         if (!myHistory) {
-            myHistory = [exp.replace("*", "X"), String("= " + last)];
+            myHistory = [exp, String("= " + last)];
         }
         else {
-            myHistory.push(exp.replace("*", "X"));
+            myHistory.push(exp);
             myHistory.push(String("= " + last));
         }
         myScreen.innerHTML = last.toLocaleString();
@@ -137,19 +134,13 @@ function sciEqual() {
         myScreen.innerHTML = "ERROR";
     }
     else {
-        if (operator === "X") {
-            operator = "*";
-        }
-        if (operator2 === "X") {
-            operator2 = "*";
-        }
         let exp = `${a} ${operator} ${b} ${operator2} ${c}`;
         last = eval(exp);
         if (!myHistory) {
-            myHistory = [exp.replace("*", "X"), String("= " + last)];
+            myHistory = [exp, String("= " + last)];
         }
         else {
-            myHistory.push(exp.replace("*", "X"));
+            myHistory.push(exp);
             myHistory.push(String("= " + last));
         }
         myScreen.innerHTML = last.toLocaleString();
@@ -164,12 +155,12 @@ document.getElementById("equal").addEventListener("click", function () {
     else {
         sciEqual();
     }
+    renderHistory();
 });
 document.getElementById("c").addEventListener("click", () => {
     reset();
     myScreen.innerHTML = "";
-    myHistory = [];
-    renderHistory();
+    clearHistory();
 });
 document.getElementById("back").addEventListener("click", function () {
     if (c) {
