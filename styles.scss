@@ -6,9 +6,6 @@ $light-bg: rgb(231, 231, 231);
 $light-screen: #f5f5c9;
 $light-button: #7dbaff;
 
-@media screen and (max-width: 768px) {
-}
-
 @media screen and (min-width: 768px) {
 	body {
 		display: grid;
@@ -167,7 +164,7 @@ button {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	font-size: 3em;
+	font-size: 3rem;
 }
 
 #c {
@@ -227,4 +224,29 @@ button {
 	border-bottom: 2px solid white;
 	font-size: 1.5em;
 	font-weight: bold;
+}
+
+.popup {
+	display: block;
+	position: absolute;
+	top: 20px;
+	left: 35vw;
+	align-self: center;
+	max-height: 15vh;
+	background-color: rgba(255, 255, 255, 0.925);
+	padding: 1em;
+	border-radius: 15px;
+}
+
+@media screen and (max-width: 768px) {
+	#screen {
+		font-size: 2em;
+	}
+	.show {
+		max-height: 30vh;
+	}
+	#history-display {
+		max-height: 30vh;
+		background-color: #f5c9f5;
+	}
 }

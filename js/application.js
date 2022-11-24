@@ -1,9 +1,39 @@
+function active(self) {
+    if (self.style.backgroundColor === body.style.backgroundColor) {
+        self.style.color = "white";
+        if (body.className === "light") {
+            self.style.backgroundColor = "#003b7d";
+        }
+        else {
+            self.style.backgroundColor = "#56564f";
+        }
+    }
+    else {
+        myScreen.style.backgroundColor = screenColor;
+        self.style.color = "black";
+        self.style.backgroundColor = modeButtonColor;
+    }
+}
 //info button
-const info = document.getElementById("info");
 let screenLight = "off";
-info.onclick = function () {
-    alert("Developer: Etay Gozlan\nVersion: 1\nThis is a calculator web app");
-};
+const info = document.getElementById("info");
+const versionNumber = 1;
+info.addEventListener("click", function () {
+    if (!document.querySelector(".popup")) {
+        let popup = document.createElement("div");
+        popup.className = "popup";
+        popup.innerHTML = `<p>
+		Developer: Etay Gozlan<br />
+		Version: ${versionNumber}<br />
+		Description: A good old calculator
+		</p>`;
+        document.body.appendChild(popup);
+    }
+    else {
+        document.body.removeChild(document.querySelector(".popup"));
+    }
+    active(info);
+});
 //light (#mode) button
 const mode = document.getElementById("mode");
 const modeButtonColor = mode.style.backgroundColor;
@@ -27,11 +57,6 @@ mode.addEventListener("click", function () {
         mode.style.color = "black";
         mode.style.backgroundColor = modeButtonColor;
     }
-    // if (body.className === "light") {
-    // 	body.className = "dark";
-    // } else {
-    // 	body.className = "light";
-    // }
 });
 //sci button
 const sciDisplay = document.getElementById("sci-display");
@@ -108,6 +133,11 @@ function renderHistory() {
         });
     }
 }
-// document.getElementById("equal").addEventListener("click", () => {
-// 	renderHistory();
-// });
+//cloud button
+const cloud = document.getElementById("cloud");
+let cloudOn = false;
+cloud.addEventListener("click", () => {
+    active(cloud);
+    cloudOn = cloudOn ? false : true;
+    console.log("cloudOn:", cloudOn);
+});

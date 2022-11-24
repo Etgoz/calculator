@@ -13,11 +13,17 @@ function reset() {
     operator = "";
     operator2 = "";
 }
+function renderScreen() {
+    myScreen.innerText = `${a}${operator}${b}${operator2}${c}`;
+}
+//switch to scientific mode
 document.getElementById("sci").addEventListener("click", function () {
-    state = state === "simple" ? "scientific mode" : "simple";
+    state = state === "simple" ? "scientific" : "simple";
     reset();
+    myScreen.innerText = "";
     console.log(state);
 });
+//handle user input
 const myScreen = document.getElementById("screen");
 function checkInput(userIn) {
     if (!operator) {
@@ -99,6 +105,7 @@ Array.from(document.getElementsByClassName("operator")).forEach((button) => {
         }
     });
 });
+//equal button functionality
 function simpleEqual() {
     if (!operator) {
         last = a;
@@ -148,20 +155,53 @@ function sciEqual() {
     }
     reset();
 }
+//cloud mode
+const myExpr = encodeURIComponent(`${a} ${operator} ${b} ${operator2} ${c}`);
+async function fetchWithTimeout(resource, options = {}) {
+    const { timeout = 2000 } = options;
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), timeout);
+    const response = await fetch(resource, {
+        ...options,
+        signal: controller.signal,
+    });
+    clearTimeout(id);
+    return response;
+}
+async function useAPI() {
+    console.log(myExpr);
+    try {
+        const response = await fetchWithTimeout(`http://api.mathjs.org/v4/?expr=${myExpr}`);
+        const result = await response.text();
+        console.log(result);
+        last = result;
+        myScreen.innerText = result;
+    }
+    catch (e) {
+        alert("Error, go back to local mode");
+    }
+}
 document.getElementById("equal").addEventListener("click", function () {
-    if (state === "simple") {
-        simpleEqual();
+    if (!cloudOn) {
+        if (state === "simple") {
+            simpleEqual();
+        }
+        else {
+            sciEqual();
+        }
     }
     else {
-        sciEqual();
+        useAPI();
     }
     renderHistory();
 });
+//c button
 document.getElementById("c").addEventListener("click", () => {
     reset();
     myScreen.innerHTML = "";
     clearHistory();
 });
+//back button - delete last char
 document.getElementById("back").addEventListener("click", function () {
     if (c) {
         c = c.slice(0, -1);
@@ -179,4 +219,153 @@ document.getElementById("back").addEventListener("click", function () {
         a = a.slice(0, -1);
     }
     myScreen.innerHTML = myScreen.innerHTML.slice(0, -1);
+});
+//get input from paste
+function checkDots(op) {
+    return op.includes(".");
+}
+function getFromScreen() {
+    if (myScreen.innerText) {
+        const expr = myScreen.innerText;
+        const splitExpr = expr.split("");
+        reset();
+        let vars = ["", "", "", "", ""];
+        let i = 0;
+        splitExpr.forEach((char) => {
+            if (!"1234567890.*/+-".includes(char)) {
+                myScreen.innerText = "ERROR";
+            }
+            else if ("1234567890.".includes(char)) {
+                if (char === "." && !checkDots(vars[i])) {
+                    vars[i] += char;
+                }
+                else if (!(char === ".")) {
+                    vars[i] += char;
+                }
+            }
+            else if ("/*+-".includes(char)) {
+                i++;
+                vars[i] = char;
+                i++;
+            }
+        });
+        a = vars[0];
+        operator = vars[1];
+        b = vars[2];
+        operator2 = vars[3];
+        c = vars[4];
+        console.log(a, operator, b, operator2, c);
+    }
+}
+document.addEventListener("paste", (ev) => {
+    if (state === "scientific") {
+        myScreen.innerText = ev.clipboardData.getData("text/plain");
+        getFromScreen();
+    }
+});
+//sci operators
+document.getElementById("square").addEventListener("click", () => {
+    if (!operator) {
+        a = String(Number(a) ** 2);
+    }
+    else if (operator && !operator2) {
+        b = String(Number(b) ** 2);
+    }
+    else if (operator2) {
+        c = String(Number(c) ** 2);
+    }
+    renderScreen();
+});
+document.getElementById("sqrt").addEventListener("click", () => {
+    if (!operator) {
+        a = String(Math.sqrt(Number(a)));
+    }
+    else if (operator && !operator2) {
+        b = String(Math.sqrt(Number(b)));
+    }
+    else if (operator2) {
+        c = String(Math.sqrt(Number(c)));
+    }
+    renderScreen();
+});
+document.getElementById("mod").addEventListener("click", (ev) => {
+    if (!operator) {
+        operator = document.getElementById("mod").getAttribute("value");
+    }
+    else if (operator && !operator2) {
+        operator2 = document.getElementById("mod").getAttribute("value");
+    }
+    renderScreen();
+});
+document.getElementById("pi").addEventListener("click", () => {
+    if (!operator) {
+        a = String(Math.PI.toFixed(2));
+    }
+    else if (operator && !operator2) {
+        b = String(Math.PI.toFixed(2));
+    }
+    else if (operator2) {
+        c = String(Math.PI.toFixed(2));
+    }
+    renderScreen();
+});
+document.getElementById("powerOf").addEventListener("click", (ev) => {
+    if (!operator) {
+        operator = document.getElementById("powerOf").getAttribute("value");
+    }
+    else if (operator && !operator2) {
+        operator2 = document.getElementById("powerOf").getAttribute("value");
+    }
+    renderScreen();
+});
+document.getElementById("plus-minus").addEventListener("click", () => {
+    if (!operator) {
+        a = a[0] === "-" ? a.replace("-", "") : "-" + a;
+    }
+    else if (operator && !operator2) {
+        b = b[0] === "-" ? b.replace("-", "") : "-" + b;
+    }
+    else if (operator2) {
+        c = c[0] === "-" ? c.replace("-", "") : "-" + c;
+    }
+    renderScreen();
+});
+function factorial(num) {
+    if (num < 0) {
+        return -1;
+    }
+    else if (num == 0) {
+        return 1;
+    }
+    else {
+        return num * factorial(num - 1);
+    }
+}
+document.getElementById("factorial").addEventListener("click", () => {
+    if (!operator) {
+        a = String(factorial(Number(a))).toLocaleString();
+        last = a;
+    }
+    else if (operator && !operator2) {
+        b = String(factorial(Number(b))).toLocaleString();
+        last = b;
+    }
+    else if (operator2) {
+        c = String(factorial(Number(c))).toLocaleString();
+        last = c;
+    }
+    renderScreen();
+});
+//my feature
+document.getElementById("ans").addEventListener("click", () => {
+    if (!operator) {
+        a = last;
+    }
+    else if (operator && !operator2) {
+        b = last;
+    }
+    else if (operator2) {
+        c = last;
+    }
+    renderScreen();
 });
