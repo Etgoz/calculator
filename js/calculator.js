@@ -4,6 +4,7 @@ let operator = "";
 let b = "";
 let operator2 = "";
 let c = "";
+let allVars = a + operator + b + operator2 + c;
 let state = "simple";
 let myHistory;
 function reset() {
@@ -14,7 +15,7 @@ function reset() {
     operator2 = "";
 }
 function renderScreen() {
-    myScreen.innerText = `${a}${operator}${b}${operator2}${c}`;
+    myScreen.innerText = allVars;
 }
 //switch to scientific mode
 document.getElementById("sci").addEventListener("click", function () {
@@ -156,7 +157,7 @@ function sciEqual() {
     reset();
 }
 //cloud mode
-const myExpr = encodeURIComponent(`${a} ${operator} ${b} ${operator2} ${c}`);
+const myExpr = encodeURIComponent(allVars);
 async function fetchWithTimeout(resource, options = {}) {
     const { timeout = 2000 } = options;
     const controller = new AbortController();
@@ -169,7 +170,8 @@ async function fetchWithTimeout(resource, options = {}) {
     return response;
 }
 async function useAPI() {
-    console.log(myExpr);
+    console.log("my vars-", allVars);
+    console.log("encoded expression: ", myExpr);
     try {
         const response = await fetchWithTimeout(`http://api.mathjs.org/v4/?expr=${myExpr}`);
         const result = await response.text();
