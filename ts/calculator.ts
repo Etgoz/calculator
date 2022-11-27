@@ -4,7 +4,6 @@ let operator: string = "";
 let b: string = "";
 let operator2: string = "";
 let c: string = "";
-let allVars: string = a + operator + b + operator2 + c;
 
 let state: string = "simple";
 
@@ -19,7 +18,7 @@ function reset(): void {
 }
 
 function renderScreen() {
-	myScreen.innerText = allVars;
+	myScreen.innerText = `${a}${operator}${b}${operator2}${c}`;
 }
 
 //switch to scientific mode
@@ -164,8 +163,6 @@ function sciEqual() {
 }
 
 //cloud mode
-const myExpr: string = encodeURIComponent(allVars);
-
 async function fetchWithTimeout(resource: string, options: any = {}) {
 	const { timeout = 2000 } = options;
 
@@ -180,7 +177,9 @@ async function fetchWithTimeout(resource: string, options: any = {}) {
 }
 
 async function useAPI() {
+	const allVars: string = `${a}${operator}${b}${operator2}${c}`;
 	console.log("my vars-", allVars);
+	const myExpr: string = encodeURIComponent(allVars);
 	console.log("encoded expression: ", myExpr);
 	try {
 		const response = await fetchWithTimeout(

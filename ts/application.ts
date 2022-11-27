@@ -119,7 +119,6 @@ window.document.addEventListener("DOMContentLoaded", () => {
 });
 
 //history log
-
 const historyTitle = document.getElementById("history-title");
 
 function clearHistory(): void {
